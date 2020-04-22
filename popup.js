@@ -1,15 +1,15 @@
-	var megroplanSaveUrl = 'https://megroplan.com/app/recipe/scrape';
+var megroplan = new Megroplan();
 
-	$(function() {
-		var brnSave = document.getElementById('saveRecipe');
-			brnSave.addEventListener('click', function() {
-				chrome.tabs.query({'currentWindow': true, 'active': true}, function(tab) {
-				var url = megroplanSaveUrl + '?url=' + tab[0].url;
-				
+$(function() {
+	var btnSave = document.getElementById('saveRecipe');
+	btnSave.addEventListener('click', function() {
+			chrome.tabs.query({'currentWindow': true, 'active': true}, function(tab) {
+			megroplan.scrapeWebsite(tab[0].url, function(_url) {
 				chrome.tabs.create({
 					active: true,
-					url : url
+					url : _url
 				});
 			});
-		}, false);
+		});
 	}, false);
+}, false);
